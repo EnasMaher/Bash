@@ -7,6 +7,9 @@ case $REPLY in
 echo "name can't be a number"
 valid=0
 ;;
++("."))
+echo "can't be dot"
+;;
 esac
 if [[ $valid -eq 1 ]]
 then
