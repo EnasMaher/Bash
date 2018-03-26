@@ -9,6 +9,7 @@ valid=0
 ;;
 +("."))
 echo "can't be dot"
+valid=0
 ;;
 esac
 if [[ $valid -eq 1 ]]

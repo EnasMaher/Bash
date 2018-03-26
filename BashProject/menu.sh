@@ -19,7 +19,7 @@ if [[ -d $REPLY ]]
 then
 usedDBName=$REPLY
 
-select ch in "Create table" "Insert into table" "Update table" "Delete table" "Display table" "Exit"
+select ch in "Create table" "Insert into table" "Update table" "Delete table" "Delete row" "Display table" "Display row" "Exit"
 do
 case $ch in
 "Create table")
@@ -125,6 +125,18 @@ echo "update"
 cd $DBpath/$usedDBName
 source $DBpath/deleteTable.sh
 ;;
+"Delete row")
+cd $DBpath/$usedDBName
+source $DBpath/existTables.sh
+read -p "Enter the name of the table"
+if [[ ! -f $REPLY ]]
+then
+echo "There is no such table"
+else
+source $DBpath/deleteRow.sh
+fi
+cd $DBpath
+;;
 "Display table")
 cd $DBpath/$usedDBName
 source $DBpath/existTables.sh
@@ -134,6 +146,18 @@ then
 echo "There is no such table"
 else
 cat $REPLY | tr ";" " " | tr "v:" " " | tr "c:" " " | tail -n +2 
+fi
+cd $DBpath
+;;
+"Display row")
+cd $DBpath/$usedDBName
+source $DBpath/existTables.sh
+read -p "Enter the name of the table"
+if [[ ! -f $REPLY ]]
+then
+echo "There is no such table"
+else
+source $DBpath/Displayrow.sh
 fi
 cd $DBpath
 ;;

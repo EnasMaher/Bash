@@ -68,6 +68,19 @@ then
 		fi
 	
 	;;
+	"")
+	if [[ $count+1 -eq $numberOfPKCol ]] 
+	then 
+		if [[ -z $REPLY ]] 
+		then
+			notValidFlag=1
+			echo "Primary key can't be null"
+		fi
+	else
+	input+="null	"
+		
+	fi
+	;;
 	*)
 	echo "Not valid input"
 	notValidFlag=1
@@ -76,8 +89,14 @@ then
 elif [[ ${DataTypes[count]} = string ]]
 then
 	echo $REPLY
-	if [[ $count+1 -eq $numberOfPKCol ]]
+	
+	if [[ $count+1 -eq $numberOfPKCol ]] 
 	then 
+		if [[ -z $REPLY ]] 
+		then
+			notValidFlag=1
+			echo "Primary key can't be null"
+		fi
 	for item in ${arr[*]}
 	do
 		echo "item in array is $item"
@@ -92,6 +111,9 @@ then
 		else
 		notValidFlag=1
 		fi
+	elif [[ -z $REPLY ]]
+	then 
+		input+="null	"
 	else
 		input+="$REPLY	"
 	fi
