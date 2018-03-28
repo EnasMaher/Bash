@@ -20,7 +20,16 @@ let counter=$counter+1
 done
 echo "Enter the ${Key[0]}"
 read
-numberOfRow=$(cut -f$numberOfPKCol $TableName | grep -n $REPLY | cut -d':' -f1)
-sed  -n "$numberOfRow d" $TableName
-
+if [[ ! -z $REPLY ]]
+then
+numberOfRow=$(cut -f$numberOfPKCol $TableName |tr ";" " "|sed "s/"v:"//g"|grep -n "^$REPLY" | cut -d':' -f1)
+if [[ ! -z $numberOfRow ]]
+then
+touch tmp
+sed "$numberOfRow d" $TableName >> tmp
+rm $TableName
+mv tmp $TableName
+# $TableName
+fi
+fi
 

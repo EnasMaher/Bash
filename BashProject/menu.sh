@@ -119,7 +119,16 @@ fi
 cd $DBpath
 ;;
 "Update table")
-echo "update"
+cd $DBpath/$usedDBName
+source $DBpath/existTables.sh
+read -p "Enter the name of the table"
+if [[ ! -f $REPLY ]]
+then
+echo "There is no such table"
+else
+source $DBpath/updateRow.sh
+fi
+cd $DBpath
 ;;
 "Delete table")
 cd $DBpath/$usedDBName
