@@ -16,11 +16,9 @@ Key+=($(tail -n +2 $TableName| grep 'c:' | cut -f$counter |grep '(P)'| cut -d':'
 if [[ ${#Key[@]} -gt 0 ]] && [[ $numberOfPKCol -eq -1 ]]
 then 
 numberOfPKCol=$counter
-echo $numberOfPKCol 
 fi
 let counter=$counter+1
 done
-echo ${#Key[@]}
 echo "These the names of the columns Enter their values ${names[*]}"
 echo ${DataTypes[*]}
 
@@ -36,7 +34,7 @@ do
 	then
 		let val=$count+1
 		arr+=($(tail -n +2 $TableName |grep 'v:' | cut -d$'\t' -f$val | cut -d':' -f2))
-		echo ${#arr[@]}
+		
 	fi
 	read
 REPLY=$(echo $REPLY | tr " " ';')
@@ -50,7 +48,7 @@ then
 		then 
 		for item in ${arr[*]}
 		do
-			echo "item in array is $item"
+			
 			if [[ $item -eq $REPLY ]]
 			then
 			found=1
@@ -99,7 +97,7 @@ then
 		fi
 	for item in ${arr[*]}
 	do
-		echo "item in array is $item"
+		
 		if [[ $item = $REPLY ]]
 		then
 			found=1
@@ -114,6 +112,9 @@ then
 	elif [[ -z $REPLY ]]
 	then 
 		input+="null	"
+	elif [[ $REPLY = . ]]
+	then
+		notValidFlag=1
 	else
 		input+="$REPLY	"
 	fi
@@ -125,6 +126,6 @@ if [[ $notValidFlag -eq 0 ]]
 then
 echo "v:$input" >> $TableName
 fi
-echo ${Key[@]}
+
 
 

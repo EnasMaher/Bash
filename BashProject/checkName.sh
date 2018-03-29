@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 valid=1
-read -p "Enter the name"
+read -p "Enter the name : "
 shopt -s extglob
 case $REPLY in
 +([[:digit:]])) 

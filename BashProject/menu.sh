@@ -14,7 +14,7 @@ fi
 ;;
 "Use Exist Database")
 . ./existDB.sh
-read -p "choose the Database you want to use"
+read -p "choose the Database you want to use : "
 if [[ -d $REPLY ]]
 then
 usedDBName=$REPLY
@@ -24,6 +24,11 @@ do
 case $ch in
 "Create table")
 . ./checkName.sh
+if [[ $REPLY = tmp ]]
+then
+echo "you can't create table called is tmp"
+valid=0
+fi
 if [[ $valid -eq 1 ]]
 then
 	cd $usedDBName
@@ -35,11 +40,11 @@ then
 	if [[ ! existTable -eq 1 ]]
 	then
 	nameOfTable=$REPLY
-	read -p "Enter number of columns"
+	read -p "Enter number of columns : "
 	di='^[0-9]+$'
 	while [[ ! $REPLY =~ $di ]] || [[ $REPLY -eq 0 ]]
 	do
-	read -p "Enter number of columns"
+	read -p "Enter number of columns : "
 	done
 	numberOfCol=$REPLY
 	echo $numberOfCol >> $nameOfTable 
@@ -54,11 +59,11 @@ source $DBpath/checkName.sh
 	#echo $REPLY >> $nameOfTable
 	nameOfCol=$REPLY
 	NameOfColumns+=($nameOfCol)
-	read -p "Enter the Data type (number/string)"
+	read -p "Enter the Data type (number/string): "
 	echo "$REPLY"
 while [[ $REPLY != number ]] && [[ $REPLY != string ]]
 do
-	read -p "Enter the Data type (number/string)"
+	read -p "Enter the Data type (number/string): "
 	echo $REPLY
 done
 	if [ $REPLY = number -o $REPLY = string ]
@@ -68,10 +73,10 @@ done
 	fi
 if [[ $PrimaryKey = "" ]]
 then
-read -p "IS this the PrimaryKey (y/n)"
+read -p "IS this the PrimaryKey (y/n)?  "
 	while [[ $REPLY != y ]] && [[ $REPLY != n ]]
 	do
-	read -p "IS this the PrimaryKey (y/n)"
+	read -p "IS this the PrimaryKey (y/n)?  "
 	done
 	if [[ $REPLY = y ]]
 	then
@@ -88,7 +93,7 @@ let numberOfCol=$numberOfCol-1
 echo "number of Columns $numberOfCol"
 fi
 done
-echo $PrimaryKey 
+#echo $PrimaryKey 
 if [[ $PrimaryKey = "" ]]
 then
 #echo "P" >> $nameOfTable
@@ -102,6 +107,7 @@ do
 echo -n "c:${NameOfColumns[$counter]}(${DataTypes[$counter]})(${Keys[$counter]})	" >> $nameOfTable
 let counter=$counter+1
 done
+echo \n >> $nameOfTable
 fi
 cd $DBpath
 fi
@@ -121,7 +127,7 @@ cd $DBpath
 "Update table")
 cd $DBpath/$usedDBName
 source $DBpath/existTables.sh
-read -p "Enter the name of the table"
+read -p "Enter the name of the table : "
 if [[ ! -f $REPLY ]]
 then
 echo "There is no such table"
@@ -137,7 +143,7 @@ source $DBpath/deleteTable.sh
 "Delete row")
 cd $DBpath/$usedDBName
 source $DBpath/existTables.sh
-read -p "Enter the name of the table"
+read -p "Enter the name of the table : "
 if [[ ! -f $REPLY ]]
 then
 echo "There is no such table"
@@ -161,7 +167,7 @@ cd $DBpath
 "Display row")
 cd $DBpath/$usedDBName
 source $DBpath/existTables.sh
-read -p "Enter the name of the table"
+read -p "Enter the name of the table : "
 if [[ ! -f $REPLY ]]
 then
 echo "There is no such table"
